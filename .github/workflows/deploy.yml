@@ -17,10 +17,10 @@ jobs:
       - name: Deploy to VPS over SSH
         uses: appleboy/ssh-action@v1.2.2
         with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          port: ${{ secrets.PORT }}
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SERVER_SSH }}
+          port: ${{ secrets.SERVER_PORT }}
           script: |
             set -e
             cd /var/www/synceri
