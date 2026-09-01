@@ -1,26 +1,102 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Ecosystem */
+  --eg-navy: #0A0E27;
+  --eg-cyan: #00D4FF;
+  --eg-cyan-deep: #22D3EE;
+  --eg-gold: #F5C542;
+
+  /* Synceri signature */
+  --syn-volt: #DDFF00;
+  --syn-volt-soft: rgba(221, 255, 0, 0.14);
+  --syn-volt-glow: rgba(221, 255, 0, 0.35);
+  --syn-volt-ink: #5C6B00;
+  --syn-volt-deep: #A8C400;
+
+  /* Surfaces (dark default) */
+  --surface-base: #0A0E27;
+  --surface-raised: #10152E;
+  --surface-elevated: #171D3A;
+  --surface-hover: #1E2547;
+  --surface-active: #25305A;
+  --grid-line: #1A2140;
+  --grid-line-major: #242E55;
+  --border-subtle: #232B4F;
+  --border-strong: #3A4677;
+
+  /* Text */
+  --text-primary: #F4F6FB;
+  --text-secondary: #A9B4D0;
+  --text-muted: #6E7BA0;
+  --text-disabled: #4A5578;
+  --text-on-volt: #0A0E27;
+  --text-on-cyan: #0A0E27;
+
+  /* Interactive */
+  --action-primary: #00D4FF;
+  --action-hover: #4AE0FF;
+  --action-pressed: #22D3EE;
+  --action-soft: rgba(0, 212, 255, 0.12);
+  --focus-ring: rgba(0, 212, 255, 0.6);
+
+  /* Time semantics */
+  --time-scheduled: #057BC1;
+  --time-scheduled-lt: #4DD8FF;
+  --time-focus: #00D4FF;
+  --time-now: #DDFF00;
+  --time-complete: #A8C400;
+  --time-free: rgba(221, 255, 0, 0.06);
+  --time-tentative: #F5C542;
+  --time-deadline: #ED7A2F;
+  --time-overdue: #E5484D;
+  --time-past: rgba(110, 123, 160, 0.4);
+
+  /* Categories */
+  --cat-01: #4DD8FF; --cat-02: #7C8CF8; --cat-03: #C77DFF; --cat-04: #F06BA8;
+  --cat-05: #ED7A2F; --cat-06: #F5C542; --cat-07: #54D6A8; --cat-08: #A8C400;
+
+  --background: var(--surface-base);
+  --foreground: var(--text-primary);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-volt: var(--syn-volt);
+  --color-volt-deep: var(--syn-volt-deep);
+  --color-volt-soft: var(--syn-volt-soft);
+
+  --color-base: var(--surface-base);
+  --color-raised: var(--surface-raised);
+  --color-elevated: var(--surface-elevated);
+  --color-hover: var(--surface-hover);
+  --color-active: var(--surface-active);
+
+  --color-subtle: var(--border-subtle);
+  --color-strong: var(--border-strong);
+  --color-grid: var(--grid-line);
+
+  --color-primary: var(--text-primary);
+  --color-secondary: var(--text-secondary);
+  --color-muted: var(--text-muted);
+
+  --color-action: var(--action-primary);
+  --color-action-soft: var(--action-soft);
+
+  --color-scheduled: var(--time-scheduled-lt);
+  --color-focus: var(--time-focus);
+  --color-tentative: var(--time-tentative);
+  --color-deadline: var(--time-deadline);
+  --color-overdue: var(--time-overdue);
+
+  --font-display: var(--font-oswald), sans-serif;
+  --font-sans: var(--font-josefin), sans-serif;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-josefin), Arial, Helvetica, sans-serif;
 }

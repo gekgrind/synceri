@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  /* Keeps the dev overlay badge out of marketing screenshots. */
+  devIndicators: false,
 };
 
 export default nextConfig;
