@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Oswald, Josefin_Sans } from "next/font/google";
 import "./globals.css";
+import { ClickSpark } from "@/components/global/ClickSpark";
 
 const oswald = Oswald({
   variable: "--font-oswald",
@@ -31,7 +32,10 @@ export default function RootLayout({
       lang="en"
       className={`${oswald.variable} ${josefinSans.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <ClickSpark />
+        {children}
+      </body>
     </html>
   );
 }
