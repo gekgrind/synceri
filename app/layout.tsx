@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Oswald, Josefin_Sans } from "next/font/google";
+import { ThemeProvider } from "@/components/theme/ThemeProvider";
+import ThemeScript from "@/components/theme/theme-script";
 import "./globals.css";
 
 const oswald = Oswald({
@@ -29,9 +31,17 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      // ThemeScript sets data-theme before paint; suppress the resulting
+      // server/client attribute difference on <html> only.
+      suppressHydrationWarning
       className={`${oswald.variable} ${josefinSans.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <head>
+        <ThemeScript />
+      </head>
+      <body className="min-h-full flex flex-col">
+        <ThemeProvider>{children}</ThemeProvider>
+      </body>
     </html>
   );
 }
