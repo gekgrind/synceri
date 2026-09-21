@@ -16,7 +16,7 @@ export default function DailyRhythm({ delay = 0, className = "" }: { delay?: num
     );
 
   return (
-    <Card delay={delay} className={`flex flex-1 flex-col ${className}`}>
+    <Card delay={delay} className={`flex flex-col ${className}`}>
       <CardTitle aside={`${done}/${routines.length}`}>Daily rhythm</CardTitle>
 
       <ul className="flex flex-col gap-0.5">
@@ -42,9 +42,9 @@ export default function DailyRhythm({ delay = 0, className = "" }: { delay?: num
         ))}
       </ul>
 
-      <div className="mt-auto flex items-center gap-2 border-t border-subtle pt-2.5">
+      <div className="mt-3 flex items-center gap-2 border-t border-subtle pt-2.5">
         <div
-          className="h-1 flex-1 overflow-hidden rounded-full bg-grid-major"
+          className="h-1.5 flex-1 overflow-hidden rounded-full bg-grid-major"
           role="progressbar"
           aria-label="Routines completed today"
           aria-valuenow={done}

@@ -33,15 +33,23 @@ export default function TodayDashboard() {
     <>
       <DashboardHeader />
 
-      <div className="mt-4 flex flex-1 flex-col gap-4 lg:grid lg:grid-cols-[minmax(0,1fr)_300px] xl:grid-cols-[minmax(0,1fr)_336px]">
+      <div className="mt-4 flex flex-1 flex-col gap-4 lg:grid lg:grid-cols-[minmax(0,1fr)_320px] xl:grid-cols-[minmax(0,1fr)_372px]">
         {/* Workspace column */}
         <div className="contents lg:flex lg:min-w-0 lg:flex-col lg:gap-4">
           <FocusHero className="order-1 lg:order-none" />
 
-          <div className="contents lg:flex lg:flex-col lg:gap-4 xl:grid xl:h-[500px] xl:grid-cols-[minmax(0,1fr)_290px]">
+          {/* Supporting band. Life alignment takes the NARROW column and the
+              row's height comes from the rhythm + momentum stack's own
+              content — no fixed height, and nothing stretches into slack.
+              Widths are fr-distributed so the split holds at every width; the
+              288px floor is the point below which the orbit's node labels
+              stop being legible, not a layout tweak. */}
+          <div className="contents lg:grid lg:grid-cols-[minmax(288px,1fr)_minmax(0,1.9fr)] lg:gap-4">
             <Card
               delay={90}
-              className="order-6 flex min-h-[334px] flex-col lg:order-none xl:min-h-0"
+              // Opts out of the row's stretch: a radial chart sized by a
+              // neighbouring list's height just pads itself with dead space.
+              className="order-6 flex min-h-[320px] flex-col lg:order-none lg:self-start lg:min-h-0"
             >
               <AlignmentOrbit />
             </Card>

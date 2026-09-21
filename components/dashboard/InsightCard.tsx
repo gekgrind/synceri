@@ -5,10 +5,10 @@ import { CalendarClock, Check, ShieldCheck, Sparkles, type LucideIcon } from "lu
 import { Card } from "@/components/ui/Card";
 import { insights, type InsightTone } from "@/lib/mock/dashboard";
 
-const TONE: Record<InsightTone, { icon: LucideIcon; label: string }> = {
-  conflict: { icon: CalendarClock, label: "Conflict" },
-  suggestion: { icon: Sparkles, label: "Suggestion" },
-  protect: { icon: ShieldCheck, label: "Protecting" },
+const TONE: Record<InsightTone, { icon: LucideIcon; label: string; color: string }> = {
+  conflict: { icon: CalendarClock, label: "Conflict", color: "var(--time-deadline)" },
+  suggestion: { icon: Sparkles, label: "Suggestion", color: "var(--action-primary)" },
+  protect: { icon: ShieldCheck, label: "Protecting", color: "var(--time-focus)" },
 };
 
 /**
@@ -41,7 +41,7 @@ export default function InsightCard({ delay = 0, className = "" }: { delay?: num
     );
   }
 
-  const { icon: Icon, label } = TONE[insight.tone];
+  const { icon: Icon, label, color } = TONE[insight.tone];
   const remaining = insights.length - index - 1;
 
   return (
@@ -50,23 +50,37 @@ export default function InsightCard({ delay = 0, className = "" }: { delay?: num
       ariaLabel="Synceri guidance"
       className={`border-[color:var(--action-border)] bg-[linear-gradient(160deg,var(--action-soft)_0%,var(--surface-raised)_62%)] ${className}`}
     >
-      <div className="mb-2.5 flex items-center gap-2">
-        <Icon size={15} strokeWidth={1.9} className="shrink-0 text-action" />
-        <h2 className="font-display text-[14px] font-medium uppercase tracking-[0.14em] text-primary">
+      <div className="mb-3 flex items-center gap-2">
+        <span
+          aria-hidden="true"
+          className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg"
+          style={{ background: `color-mix(in srgb, ${color} 16%, transparent)` }}
+        >
+          <Icon size={14} strokeWidth={2} style={{ color }} />
+        </span>
+        <h2 className="font-display text-[13px] font-medium uppercase tracking-[0.16em] text-secondary">
           Synceri noticed
         </h2>
-        <span className="ml-auto rounded border border-subtle px-1.5 py-0.5 text-[10px] uppercase tracking-[0.12em] text-muted">
+        <span
+          className="ml-auto rounded px-1.5 py-0.5 text-[10px] uppercase tracking-[0.12em]"
+          style={{
+            color,
+            background: `color-mix(in srgb, ${color} 12%, transparent)`,
+          }}
+        >
           {label}
         </span>
       </div>
 
-      <p className="text-[14px] font-medium leading-snug text-primary">{insight.headline}</p>
+      <p className="font-display text-[16px] font-medium leading-snug text-primary">
+        {insight.headline}
+      </p>
       <p className="mt-1.5 text-[13px] leading-relaxed text-secondary">{insight.body}</p>
 
       <div className="mt-3.5 flex items-center gap-2">
         <button
           type="button"
-          className="rounded-lg bg-action px-3 py-2 text-[12px] font-semibold text-[color:var(--text-on-cyan)] transition-colors duration-200 hover:bg-[color:var(--action-hover)] active:bg-[color:var(--action-pressed)]"
+          className="rounded-lg bg-action px-3 py-2 text-[12px] font-semibold text-[color:var(--text-on-cyan)] transition-[background-color,transform] duration-200 hover:bg-[color:var(--action-hover)] active:scale-[0.98] active:bg-[color:var(--action-pressed)]"
         >
           {insight.primaryAction}
         </button>

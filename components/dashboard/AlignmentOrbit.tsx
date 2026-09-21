@@ -48,7 +48,7 @@ export default function AlignmentOrbit() {
         <span className="text-[12px] text-muted">Last 7 days</span>
       </div>
 
-      <div className="relative mt-1 min-h-[260px] flex-1">
+      <div className="relative mt-1 min-h-[280px] flex-1">
         <svg
           viewBox={`0 0 ${SIZE} ${SIZE}`}
           preserveAspectRatio="xMidYMid meet"

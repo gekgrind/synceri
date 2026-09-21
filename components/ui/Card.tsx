@@ -5,6 +5,12 @@ type CardProps = {
   delay?: number;
   as?: "section" | "div";
   ariaLabel?: string;
+  /**
+   * Lifts the border on hover. Only for cards that are themselves a target —
+   * a static panel that brightens under the cursor promises a click that
+   * isn't there.
+   */
+  interactive?: boolean;
 };
 
 export function Card({
@@ -13,11 +19,14 @@ export function Card({
   delay = 0,
   as: Tag = "section",
   ariaLabel,
+  interactive = false,
 }: CardProps) {
   return (
     <Tag
       aria-label={ariaLabel}
-      className={`syn-rise rounded-2xl border border-subtle bg-raised p-4 shadow-[var(--shadow-card)] transition-colors duration-300 hover:border-strong ${className}`}
+      className={`syn-rise rounded-2xl border border-subtle bg-raised p-4 shadow-[var(--shadow-card)] transition-colors duration-300 ${
+        interactive ? "hover:border-strong" : ""
+      } ${className}`}
       style={{ animationDelay: `${delay}ms` }}
     >
       {children}

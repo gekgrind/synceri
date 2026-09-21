@@ -67,7 +67,7 @@ export default function ScheduleTimeline() {
               style={{ top: offsetOf(hour) }}
             >
               <span
-                className="shrink-0 text-right text-[10px] uppercase tracking-wider tabular-nums text-muted"
+                className="shrink-0 text-right text-[10px] font-medium uppercase tracking-wider tabular-nums text-[color:var(--text-disabled)]"
                 style={{ width: GUTTER - 10 }}
               >
                 {formatTime(hour).replace(":00", "")}
@@ -103,7 +103,7 @@ export default function ScheduleTimeline() {
                     type="button"
                     onClick={() => setSelectedId(isSelected ? null : block.id)}
                     aria-pressed={isSelected}
-                    className="group relative flex h-full w-full flex-col justify-center overflow-hidden rounded-lg pl-2.5 pr-2 text-left transition-[background-color,opacity] duration-200"
+                    className="group relative flex h-full w-full flex-col justify-center overflow-hidden rounded-lg pl-2.5 pr-2 text-left transition-[background-color,opacity,box-shadow] duration-200"
                     style={{
                       // Category colour as a 3px edge plus a ~12% wash, never a
                       // solid fill — that is how a calendar turns into confetti.
@@ -112,7 +112,11 @@ export default function ScheduleTimeline() {
                       }), transparent)`,
                       borderLeft: `3px ${block.tentative ? "dashed" : "solid"} ${meta.color}`,
                       opacity: isPast ? "var(--block-past-opacity)" : 1,
-                      boxShadow: isSelected ? `inset 0 0 0 1px ${meta.color}` : undefined,
+                      boxShadow: isSelected
+                        ? `inset 0 0 0 1px ${meta.color}`
+                        : status === "now"
+                          ? `inset 0 0 0 1px color-mix(in srgb, ${meta.color} 45%, transparent)`
+                          : undefined,
                     }}
                   >
                     <span className="flex min-w-0 items-center gap-1.5">
@@ -130,7 +134,7 @@ export default function ScheduleTimeline() {
                       )}
                     </span>
                     {!compact && (
-                      <span className="mt-0.5 flex min-w-0 items-center gap-1.5 text-[10.5px] tabular-nums text-muted">
+                      <span className="mt-px flex min-w-0 items-center gap-1.5 text-[10.5px] tabular-nums text-muted">
                         <span className="truncate">
                           {formatTime(block.start)} · {formatDuration(block.end - block.start)}
                         </span>
@@ -159,11 +163,13 @@ export default function ScheduleTimeline() {
               {formatTime(today.now).replace(" AM", "").replace(" PM", "")}
             </span>
             <span
+              aria-hidden="true"
+              className="-mr-1 h-[5px] w-[5px] shrink-0 rounded-full"
+              style={{ background: "var(--time-now)", boxShadow: "var(--now-glow)" }}
+            />
+            <span
               className="h-[2px] flex-1 rounded-full"
-              style={{
-                background: "var(--time-now)",
-                boxShadow: "0 0 12px 2px var(--syn-volt-glow)",
-              }}
+              style={{ background: "var(--time-now)", boxShadow: "var(--now-glow)" }}
             />
           </div>
         </div>

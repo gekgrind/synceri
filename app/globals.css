@@ -80,6 +80,16 @@
   --cat-05: #ED7A2F; --cat-06: #F5C542; --cat-07: #54D6A8; --cat-08: #A8C400;
 
   /* Depth. Dark leans on borders, light leans on shadow. */
+  /* Hero surface. Dark layers two navies; light needs its own recipe because
+     elevated and raised are both white there (see the light block). */
+  --hero-surface: linear-gradient(135deg, var(--surface-elevated) 0%, var(--surface-raised) 58%);
+  --hero-border: var(--border-subtle);
+  /* Recessed wells inside a card (priority tiles, nested rows). Reads as
+     inset against the card in both themes. */
+  --surface-inset: #0C1129;
+  /* The now-line reads as a precise instrument, not a HUD: one tight bloom. */
+  --now-glow: 0 0 6px 0 rgba(221, 255, 0, 0.45);
+
   /* Calendar block treatment (see ScheduleTimeline) */
   --block-wash: 12%;
   --block-wash-active: 22%;
@@ -142,6 +152,13 @@
   --cat-01: #0E8FB8; --cat-02: #5566DE; --cat-03: #9D4EDD; --cat-04: #D2437F;
   --cat-05: #C75E1A; --cat-06: #A97A0A; --cat-07: #1E9E74; --cat-08: #6E8500;
 
+  /* Two degrees of tonal shift plus a cool settle at the far corner: enough
+     to give the hero dimension on white without darkening it into grey. */
+  --hero-surface: linear-gradient(140deg, #FFFFFF 0%, #FDFEFF 38%, #F3F6FC 100%);
+  --hero-border: #D3DAEE;
+  --surface-inset: #F6F8FD;
+  --now-glow: 0 0 6px 0 rgba(168, 196, 0, 0.5);
+
   --block-wash: 18%;
   --block-wash-active: 30%;
   --block-past-opacity: 0.6;
@@ -165,6 +182,7 @@
   --color-raised: var(--surface-raised);
   --color-elevated: var(--surface-elevated);
   --color-hover: var(--surface-hover);
+  --color-inset: var(--surface-inset);
   --color-active: var(--surface-active);
 
   --color-subtle: var(--border-subtle);

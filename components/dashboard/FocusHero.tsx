@@ -32,8 +32,8 @@ export default function FocusHero({ className = "" }: { className?: string }) {
     >
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -right-16 -top-24 h-64 w-64 rounded-full"
-        style={{ background: "radial-gradient(circle, var(--syn-volt-soft) 0%, transparent 68%)" }}
+        className="pointer-events-none absolute -right-20 -top-28 h-72 w-72 rounded-full opacity-70"
+        style={{ background: "radial-gradient(circle, var(--syn-volt-soft) 0%, transparent 70%)" }}
       />
 
       <div className="relative flex flex-wrap items-start justify-between gap-5 sm:gap-6">
@@ -44,14 +44,14 @@ export default function FocusHero({ className = "" }: { className?: string }) {
           </span>
           <h2
             id="focus-heading"
-            className="mt-2.5 font-display text-[21px] font-semibold leading-snug text-primary sm:text-[25px]"
+            className="mt-2.5 font-display text-[22px] font-semibold leading-[1.15] text-primary sm:text-[27px]"
           >
             {focus.title}
           </h2>
-          <p className="mt-1.5 max-w-[48ch] text-[14px] text-secondary">{focus.why}</p>
+          <p className="mt-2 max-w-[46ch] text-[14px] leading-relaxed text-secondary">{focus.why}</p>
 
           <div className="mt-4 flex flex-wrap items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 rounded-lg border border-subtle bg-raised px-2.5 py-1.5 text-[12px] tabular-nums text-secondary">
+            <span className="inline-flex items-center gap-1.5 rounded-lg border border-subtle bg-[color:var(--surface-inset)] px-2.5 py-1.5 text-[12px] tabular-nums text-primary">
               <Clock size={13} strokeWidth={1.75} className="text-focus" />
               {formatTime(focus.start)} – {formatTime(focus.end)}
             </span>
@@ -69,22 +69,28 @@ export default function FocusHero({ className = "" }: { className?: string }) {
           </div>
         </div>
 
-        <div className="flex w-full shrink-0 flex-row-reverse items-center justify-between gap-3 sm:w-auto sm:flex-col sm:items-end">
-          <div className="rounded-xl border border-[color:var(--syn-volt-border)] bg-volt-soft px-4 py-3 text-right">
-            <p className="text-[10px] uppercase tracking-[0.18em] text-[color:var(--syn-volt-text)]">
+        <div className="flex w-full shrink-0 flex-col items-stretch gap-2.5 sm:w-auto sm:flex-col sm:items-end sm:gap-3">
+          {/* On a phone this collapses to one line — the stacked readout costs
+              more vertical room than the number is worth at that size. */}
+          <div className="flex items-baseline gap-1.5 rounded-xl border border-[color:var(--syn-volt-border)] bg-volt-soft px-3 py-2 sm:block sm:px-4 sm:py-3 sm:text-right">
+            <p className="hidden text-[10px] uppercase tracking-[0.18em] text-[color:var(--syn-volt-text)] sm:block">
               In progress
             </p>
-            <p className="font-display text-[22px] font-semibold leading-tight tabular-nums text-primary sm:text-[24px]">
+            <p className="font-display text-[20px] font-semibold leading-tight tabular-nums text-primary sm:text-[24px]">
               {formatDuration(focus.remaining)}
             </p>
-            <p className="text-[11px] text-secondary">of focus remaining</p>
+            <p className="whitespace-nowrap text-[11px] text-secondary">of focus remaining</p>
           </div>
           <button
             type="button"
-            className="inline-flex items-center gap-1.5 rounded-lg bg-action px-3.5 py-2.5 text-[13px] font-semibold text-[color:var(--text-on-cyan)] transition-colors duration-200 hover:bg-[color:var(--action-hover)] active:bg-[color:var(--action-pressed)]"
+            className="group/cta inline-flex w-full items-center justify-center gap-1.5 rounded-lg bg-action px-3.5 py-2.5 sm:w-auto text-[13px] font-semibold text-[color:var(--text-on-cyan)] transition-[background-color,transform] duration-200 hover:bg-[color:var(--action-hover)] active:scale-[0.98] active:bg-[color:var(--action-pressed)]"
           >
             Enter focus mode
-            <ArrowRight size={14} strokeWidth={2.2} />
+            <ArrowRight
+              size={14}
+              strokeWidth={2.2}
+              className="transition-transform duration-200 group-hover/cta:translate-x-0.5"
+            />
           </button>
         </div>
       </div>
@@ -106,7 +112,7 @@ export default function FocusHero({ className = "" }: { className?: string }) {
                 type="button"
                 onClick={() => toggle(priority.id)}
                 aria-pressed={priority.done}
-                className="group flex h-full w-full items-start gap-2.5 rounded-xl border border-subtle bg-raised p-2.5 text-left transition-colors duration-200 hover:border-strong hover:bg-hover"
+                className="group flex h-full w-full items-start gap-2.5 rounded-xl border border-subtle bg-[color:var(--surface-inset)] p-2.5 text-left transition-[background-color,border-color,transform] duration-200 hover:border-strong hover:bg-hover active:scale-[0.99]"
               >
                 <span className="mt-0.5">
                   <CompletionMark done={priority.done} />
