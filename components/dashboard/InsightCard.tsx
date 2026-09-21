@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { CalendarClock, ShieldCheck, Sparkles, type LucideIcon } from "lucide-react";
+import { CalendarClock, Check, ShieldCheck, Sparkles, type LucideIcon } from "lucide-react";
 import { Card } from "@/components/ui/Card";
 import { insights, type InsightTone } from "@/lib/mock/dashboard";
 
@@ -21,7 +21,25 @@ export default function InsightCard({ delay = 0, className = "" }: { delay?: num
   const [index, setIndex] = useState(0);
 
   const insight = insights[index];
-  if (!insight) return null;
+
+  // Working through every observation is a result, so the card resolves in
+  // place. Unmounting it would leave a hole in the rail and read as a bug.
+  if (!insight) {
+    return (
+      <Card delay={delay} ariaLabel="Synceri guidance" className={className}>
+        <div className="mb-2.5 flex items-center gap-2">
+          <Check size={15} strokeWidth={2.2} className="shrink-0 text-[color:var(--time-complete)]" />
+          <h2 className="font-display text-[14px] font-medium uppercase tracking-[0.14em] text-primary">
+            All clear
+          </h2>
+        </div>
+        <p className="text-[13px] leading-relaxed text-secondary">
+          Nothing else needs rethinking right now. Synceri will speak up if the
+          day shifts.
+        </p>
+      </Card>
+    );
+  }
 
   const { icon: Icon, label } = TONE[insight.tone];
   const remaining = insights.length - index - 1;

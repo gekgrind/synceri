@@ -144,8 +144,11 @@ export default function AlignmentOrbit() {
             return (
               <g
                 key={domain.id}
+                // Focusable and labelled, but deliberately not role="button":
+                // these reveal the caption on hover/focus and have no action
+                // behind them, so announcing a button would promise an
+                // Enter/Space behaviour that does not exist.
                 tabIndex={0}
-                role="button"
                 aria-label={`${domain.label}, ${domain.value} percent aligned. ${domain.note}`}
                 onMouseEnter={() => setActiveId(domain.id)}
                 onMouseLeave={() => setActiveId(null)}
