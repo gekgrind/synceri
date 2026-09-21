@@ -1,6 +1,17 @@
 @import "tailwindcss";
 
+/* ==========================================================================
+   Synceri design tokens — see synceri-design-tokens.md (v1.0)
+   Rule that keeps the system coherent:
+     volt lime = time, cyan = interaction. Never a lime button, never a cyan
+     now-line. Category hues are fills/dots only, never solid blocks.
+   Dark is the default theme; [data-theme="light"] remaps the same token names
+   so every component stays theme-agnostic.
+   ========================================================================== */
+
 :root {
+  color-scheme: dark;
+
   /* Ecosystem */
   --eg-navy: #0A0E27;
   --eg-cyan: #00D4FF;
@@ -13,8 +24,17 @@
   --syn-volt-glow: rgba(221, 255, 0, 0.35);
   --syn-volt-ink: #5C6B00;
   --syn-volt-deep: #A8C400;
+  /* Volt used as a GRAPHIC (dots, rules, indicators, progress). Pure volt is
+     ~1.1:1 on a light surface, so light mode steps down to volt-deep. The one
+     place pure volt survives is a filled chip with navy type on it (16.9:1),
+     which is the doc-prescribed light treatment. */
+  --syn-volt-graphic: #DDFF00;
+  /* Volt used as TEXT/ICON. Volt itself fails on light surfaces, so this is
+     the only volt token components may put on type. */
+  --syn-volt-text: #DDFF00;
+  --syn-volt-border: rgba(221, 255, 0, 0.22);
 
-  /* Surfaces (dark default) */
+  /* Surfaces (dark) */
   --surface-base: #0A0E27;
   --surface-raised: #10152E;
   --surface-elevated: #171D3A;
@@ -38,35 +58,108 @@
   --action-hover: #4AE0FF;
   --action-pressed: #22D3EE;
   --action-soft: rgba(0, 212, 255, 0.12);
+  --action-border: rgba(0, 212, 255, 0.28);
   --focus-ring: rgba(0, 212, 255, 0.6);
 
   /* Time semantics */
   --time-scheduled: #057BC1;
   --time-scheduled-lt: #4DD8FF;
   --time-focus: #00D4FF;
-  --time-now: #DDFF00;
+  --time-now: var(--syn-volt-graphic);
   --time-complete: #A8C400;
   --time-free: rgba(221, 255, 0, 0.06);
   --time-tentative: #F5C542;
   --time-deadline: #ED7A2F;
   --time-overdue: #E5484D;
   --time-past: rgba(110, 123, 160, 0.4);
+  --time-deadline-soft: rgba(237, 122, 47, 0.12);
+  --time-deadline-border: rgba(237, 122, 47, 0.35);
 
-  /* Categories */
+  /* Categories (user calendars & tags — max 8) */
   --cat-01: #4DD8FF; --cat-02: #7C8CF8; --cat-03: #C77DFF; --cat-04: #F06BA8;
   --cat-05: #ED7A2F; --cat-06: #F5C542; --cat-07: #54D6A8; --cat-08: #A8C400;
 
+  /* Depth. Dark leans on borders, light leans on shadow. */
+  /* Calendar block treatment (see ScheduleTimeline) */
+  --block-wash: 12%;
+  --block-wash-active: 22%;
+  --block-past-opacity: 0.45;
+
+  --shadow-card: 0 1px 2px rgba(4, 7, 24, 0.4);
+  --shadow-raised: 0 4px 24px rgba(4, 7, 24, 0.45);
+  --scrim: rgba(4, 7, 24, 0.66);
+
   --background: var(--surface-base);
   --foreground: var(--text-primary);
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+
+  --syn-volt-soft: rgba(221, 255, 0, 0.3);
+  --syn-volt-glow: rgba(168, 196, 0, 0.45);
+  --syn-volt-graphic: #A8C400;
+  --syn-volt-text: #5C6B00;
+  --syn-volt-border: rgba(168, 196, 0, 0.4);
+
+  --surface-base: #F7F8FC;
+  --surface-raised: #FFFFFF;
+  --surface-elevated: #FFFFFF;
+  --surface-hover: #EEF1F9;
+  --surface-active: #E2E7F5;
+  --grid-line: #E4E8F4;
+  --grid-line-major: #CBD3EA;
+  --border-subtle: #DCE1F0;
+  --border-strong: #AEB9DB;
+
+  --text-primary: #0A0E27;
+  --text-secondary: #3D4668;
+  --text-muted: #6E7BA0;
+  --text-disabled: #AAB3CE;
+
+  --action-primary: #0093B8;
+  --action-hover: #00B5DB;
+  --action-pressed: #007A9B;
+  --action-soft: rgba(0, 147, 184, 0.1);
+  --action-border: rgba(0, 147, 184, 0.28);
+  --focus-ring: rgba(0, 147, 184, 0.65);
+
+  --time-scheduled: #0E8FB8;
+  --time-scheduled-lt: #0E8FB8;
+  --time-focus: #0093B8;
+  --time-now: #A8C400;
+  --time-complete: #6E8500;
+  --time-free: rgba(168, 196, 0, 0.12);
+  --time-tentative: #A97A0A;
+  --time-deadline: #C75E1A;
+  --time-overdue: #C93A3F;
+  --time-past: rgba(110, 123, 160, 0.45);
+  --time-deadline-soft: rgba(199, 94, 26, 0.1);
+  --time-deadline-border: rgba(199, 94, 26, 0.32);
+
+  /* Same eight hues, darkened to hold their identity on white without
+     vibrating. Not an inversion — each is re-tuned for ~3:1 on the base. */
+  --cat-01: #0E8FB8; --cat-02: #5566DE; --cat-03: #9D4EDD; --cat-04: #D2437F;
+  --cat-05: #C75E1A; --cat-06: #A97A0A; --cat-07: #1E9E74; --cat-08: #6E8500;
+
+  --block-wash: 18%;
+  --block-wash-active: 30%;
+  --block-past-opacity: 0.6;
+
+  --shadow-card: 0 1px 2px rgba(16, 24, 60, 0.04), 0 8px 24px -14px rgba(16, 24, 60, 0.16);
+  --shadow-raised: 0 2px 4px rgba(16, 24, 60, 0.05), 0 18px 40px -20px rgba(16, 24, 60, 0.22);
+  --scrim: rgba(10, 14, 39, 0.4);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
-  --color-volt: var(--syn-volt);
+  --color-volt: var(--syn-volt-graphic);
+  --color-volt-pure: var(--syn-volt);
   --color-volt-deep: var(--syn-volt-deep);
   --color-volt-soft: var(--syn-volt-soft);
+  --color-volt-text: var(--syn-volt-text);
 
   --color-base: var(--surface-base);
   --color-raised: var(--surface-raised);
@@ -77,6 +170,7 @@
   --color-subtle: var(--border-subtle);
   --color-strong: var(--border-strong);
   --color-grid: var(--grid-line);
+  --color-grid-major: var(--grid-line-major);
 
   --color-primary: var(--text-primary);
   --color-secondary: var(--text-secondary);
@@ -87,6 +181,7 @@
 
   --color-scheduled: var(--time-scheduled-lt);
   --color-focus: var(--time-focus);
+  --color-complete: var(--time-complete);
   --color-tentative: var(--time-tentative);
   --color-deadline: var(--time-deadline);
   --color-overdue: var(--time-overdue);
@@ -99,4 +194,60 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-josefin), Arial, Helvetica, sans-serif;
+  /* Theme swaps should read as a dim, not a flash. */
+  transition: background-color 220ms ease, color 220ms ease;
+}
+
+/* A single, consistent focus treatment for every interactive surface. */
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* --------------------------------------------------------------------------
+   Motion. Every animation below is entrance or comprehension only — nothing
+   loops, because Synceri is meant to stay open all day.
+   -------------------------------------------------------------------------- */
+@keyframes syn-rise-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes syn-draw {
+  from { stroke-dashoffset: 240; }
+  to { stroke-dashoffset: 0; }
+}
+@keyframes syn-grow {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+@keyframes syn-grow-y {
+  from { opacity: 0; transform: scaleY(0.82); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes syn-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes syn-slide-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: none; }
+}
+
+.syn-rise { animation: syn-rise-in 620ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+.syn-orbit-core, .syn-orbit-node { animation: syn-draw 1100ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+.syn-bar { transform-origin: left center; animation: syn-grow 900ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+.syn-block { transform-origin: top center; animation: syn-grow-y 520ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+.syn-fade { animation: syn-fade-in 240ms ease both; }
+.syn-sheet { animation: syn-slide-up 260ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useMemo, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { Oswald, Josefin_Sans } from "next/font/google";
 import {
@@ -144,14 +144,23 @@ interface NotFound404Props {
   accent?: string;
 }
 
+const noopSubscribe = () => () => {};
+
 export default function NotFound404({ accent = "#22D3EE" }: NotFound404Props) {
-  const [crowd, setCrowd] = useState<CrowdIcon[]>([]);
   const [popped, setPopped] = useState(false);
   const [toastVisible, setToastVisible] = useState(false);
 
-  useEffect(() => {
-    setCrowd(generateCrowd(accent));
-  }, [accent]);
+  // The crowd is randomised, so it must not be generated during SSR or the
+  // markup would not match on hydration. Built on the first client render.
+  const hydrated = useSyncExternalStore(
+    noopSubscribe,
+    () => true,
+    () => false,
+  );
+  const crowd = useMemo<CrowdIcon[]>(
+    () => (hydrated ? generateCrowd(accent) : []),
+    [hydrated, accent],
+  );
 
   const handleEasterEgg = () => {
     setPopped(true);
